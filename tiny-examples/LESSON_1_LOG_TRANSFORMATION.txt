@@ -1,0 +1,67 @@
+================================================================================
+LESSON 1: LOG TRANSFORMATION FOR NON-NEGATIVE PREDICTIONS
+================================================================================
+
+STEP 1: THE CONCEPT
+-------------------
+Regular Linear Regression:
+  Prediction = b₀ + b₁×X₁ + b₂×X₂ + ...
+  Problem: This can give ANY value including negatives!
+
+Log Transformation:
+  log(Prediction) = b₀ + b₁×X₁ + b₂×X₂ + ...
+  Then: Prediction = exp(log(Prediction))
+  Magic: exp(anything) is ALWAYS positive!
+
+================================================================================
+STEP 2: WHAT WE TESTED (Toy Example Results)
+================================================================================
+
+Dataset: 5 samples
+- Features: Temperature (°C) and Hour
+- Target: Energy consumption (kWh)
+
+Test Case:
+  Temperature: 18°C
+  Hour: 8 AM
+  Actual Energy: 40 kWh
+
+RESULTS:
+--------
+Method                          Prediction    Can Be Negative?
+Regular Linear Regression       39.45 kWh     YES ❌
+Log-Transformed Regression      44.47 kWh     NO ✅ (guaranteed!)
+
+================================================================================
+STEP 3: HOW LOG TRANSFORMATION WORKS (Step by Step)
+================================================================================
+
+Training Phase:
+1. Original targets: [50, 80, 30, 100] kWh
+2. Transform to log: [3.932, 4.394, 3.434, 4.615]
+3. Train model on LOG values
+
+Prediction Phase:
+1. Model predicts in log space: 3.817
+2. Convert back: exp(3.817) - 1 = 44.47 kWh
+3. Result is ALWAYS positive!
+
+Key Functions:
+- np.log1p(y)  -> Converts y to log space (log(1+y))
+- np.expm1(y)  -> Converts back (exp(y)-1)
+
+================================================================================
+NEXT STEPS
+================================================================================
+1. Implement this in your project structure
+2. Compare with PoissonRegressor (Option 2)
+3. Write a blog post comparing both approaches
+
+================================================================================
+FILES CREATED
+================================================================================
+- toy_example_log_transform.py (the Python code demonstrating this)
+- This summary file
+
+You should be able to download both files!
+================================================================================
