@@ -1,0 +1,302 @@
+# Energy Forecasting - Complete Baseline Pipeline
+
+## Pipeline Overview
+
+A production-ready baseline pipeline for energy forecasting with log transformation to ensure non-negative predictions.
+
+---
+
+## Project Structure
+
+```
+energy-forecast/
+├── data/
+│   └── raw/
+│       └── energy-efficiency-data.csv
+├── src/
+│   ├── data/
+│   │   ├── loader.py           # Data loading
+│   │   ├── processor.py        # Log transformation
+│   │   └── splitter.py         # Train/test splitting
+│   ├── models/
+│   │   ├── baseline.py         # Linear Regression + Log Transform
+│   │   └── poisson_model.py    # Poisson Regression
+│   └── evaluation/
+│       ├── metrics.py          # Performance metrics
+│       └── visualize.py        # Plotting functions
+├── scripts/
+│   ├── train.py                # Training script
+│   └── evaluate.py             # Evaluation script
+└── models/
+    └── baseline/
+        └── trained_model.pkl   # Saved model
+```
+
+---
+
+## Quick Start
+
+### 1. Train the Model
+
+```bash
+cd ~/portfolio-project/energy-forecast
+python scripts/train.py
+```
+
+**Output:**
+- Trained model saved to `models/baseline/trained_model.pkl`
+- Evaluation plots saved to `models/baseline/evaluation_plots.png`
+
+### 2. Evaluate the Model
+
+```bash
+python scripts/evaluate.py --model models/baseline/trained_model.pkl --plot
+```
+
+**Output:**
+- Detailed results saved to `models/baseline/evaluation_results.csv`
+- Evaluation plots
+
+---
+
+## Usage Examples
+
+### Training with Custom Parameters
+
+```bash
+# Custom test size and target
+python scripts/train.py \
+    --data data/raw/energy-efficiency-data.csv \
+    --target Y1 \
+    --test-size 0.3 \
+    --random-state 123 \
+    --model-path models/my_model.pkl
+
+# Train without generating plots
+python scripts/train.py --no-plot
+```
+
+### Evaluation on Different Data
+
+```bash
+# Evaluate with plots
+python scripts/evaluate.py \
+    --model models/baseline/trained_model.pkl \
+    --data data/new_data.csv \
+    --target Y1 \
+    --plot \
+    --output results/my_results.csv
+```
+
+---
+
+## Pipeline Components
+
+### 1. Data Loader (`src/data/loader.py`)
+```python
+from src.data.loader import load_energy_data
+
+# Load and split features/target
+X, y = load_energy_data('data/raw/energy-efficiency-data.csv', target='Y1')
+```
+
+### 2. Data Splitter (`src/data/splitter.py`)
+```python
+from src.data.splitter import DataSplitter
+
+# Split data
+splitter = DataSplitter(test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = splitter.split(X, y)
+```
+
+### 3. Log Transformation (`src/data/processor.py`)
+```python
+from src.data.processor import LogTargetTransformer
+
+# Transform target
+transformer = LogTargetTransformer()
+y_train_log = transformer.fit_transform(y_train)
+y_pred = transformer.inverse_transform(y_pred_log)
+```
+
+### 4. Baseline Model (`src/models/baseline.py`)
+```python
+from src.models.baseline import BaselineModel
+
+# Train
+model = BaselineModel()
+model.train(X_train, y_train)
+
+# Predict
+y_pred = model.predict(X_test)
+
+# Save/Load
+model.save('models/my_model.pkl')
+loaded_model = BaselineModel.load('models/my_model.pkl')
+```
+
+### 5. Metrics (`src/evaluation/metrics.py`)
+```python
+from src.evaluation.metrics import calculate_all_metrics, print_metrics
+
+# Calculate metrics
+metrics = calculate_all_metrics(y_test, y_pred, n_features=8)
+print_metrics(metrics, "Test Set")
+```
+
+### 6. Visualization (`src/evaluation/visualize.py`)
+```python
+from src.evaluation.visualize import plot_comprehensive_evaluation
+
+# Generate plots
+plot_comprehensive_evaluation(y_test, y_pred, 
+                              model_name="Baseline",
+                              save_path="plots/evaluation.png")
+```
+
+---
+
+## Performance Results
+
+### Baseline Model (Linear Regression + Log Transform)
+
+**Training Set:**
+- R² Score: 0.9207
+- RMSE: 2.83 kWh
+- MAE: 1.94 kWh
+- MAPE: 8.70%
+
+**Test Set:**
+- R² Score: 0.9091
+- RMSE: 3.08 kWh
+- MAE: 2.10 kWh
+- MAPE: 9.31%
+
+**Key Achievement:** All predictions are guaranteed to be non-negative!
+
+---
+
+## Command Line Arguments
+
+### train.py
+
+| Argument | Type | Default | Description |
+|----------|------|---------|-------------|
+| `--data` | str | `data/raw/energy-efficiency-data.csv` | Path to data file |
+| `--target` | str | `Y1` | Target column name |
+| `--test-size` | float | `0.2` | Test set proportion |
+| `--random-state` | int | `42` | Random seed |
+| `--model-path` | str | `models/baseline/trained_model.pkl` | Save path |
+| `--plot-path` | str | `models/baseline/evaluation_plots.png` | Plot save path |
+| `--no-plot` | flag | False | Skip plot generation |
+
+### evaluate.py
+
+| Argument | Type | Default | Description |
+|----------|------|---------|-------------|
+| `--model` | str | *required* | Path to trained model |
+| `--data` | str | `data/raw/energy-efficiency-data.csv` | Path to data file |
+| `--target` | str | `Y1` | Target column name |
+| `--output` | str | `models/baseline/evaluation_results.csv` | Results save path |
+| `--plot` | flag | False | Generate plots |
+| `--plot-path` | str | `models/baseline/evaluation_plots.png` | Plot save path |
+
+---
+
+## Pipeline Flow
+
+```
+1. Load Data
+   ↓
+2. Split Train/Test
+   ↓
+3. Transform Target (log1p)
+   ↓
+4. Train Model
+   ↓
+5. Make Predictions (in log space)
+   ↓
+6. Transform Back (expm1)
+   ↓
+7. Evaluate Performance
+   ↓
+8. Save Model & Results
+```
+
+---
+
+## Next Steps
+
+Now that you have a complete baseline pipeline, you can:
+
+1. **Add Advanced Models:**
+   - XGBoost
+   - Random Forest
+   - Neural Networks
+
+2. **Feature Engineering:**
+   - Polynomial features
+   - Interaction terms
+   - Feature selection
+
+3. **Hyperparameter Tuning:**
+   - Grid search
+   - Random search
+   - Bayesian optimization
+
+4. **Deployment:**
+   - Create Flask API
+   - Dockerize application
+   - Deploy to cloud
+
+5. **Monitoring:**
+   - Add logging
+   - Track model performance
+   - Set up alerts
+
+---
+
+## Troubleshooting
+
+### Model file not found
+```bash
+# Train a model first
+python scripts/train.py
+```
+
+### Import errors
+```bash
+# Make sure you're in the project root
+cd ~/portfolio-project/energy-forecast
+python scripts/train.py
+```
+
+### Data file not found
+```bash
+# Check the data path
+ls data/raw/energy-efficiency-data.csv
+```
+
+---
+
+## Best Practices
+
+1. **Always use the same random_state** for reproducibility
+2. **Save models after training** for future use
+3. **Generate evaluation plots** to understand model behavior
+4. **Track metrics** across different experiments
+5. **Document changes** in model performance
+
+---
+
+## Contact & Support
+
+Questions? Found a bug? Want to contribute?
+- Open an issue on GitHub
+- Contact: [Your Email]
+- LinkedIn: [Your LinkedIn]
+
+---
+
+**Built with:** Python, scikit-learn, pandas, matplotlib
+**License:** MIT

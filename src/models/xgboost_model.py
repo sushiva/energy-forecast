@@ -7,6 +7,7 @@ import numpy as np
 import pickle
 from pathlib import Path
 from xgboost import XGBRegressor
+from src.evaluation.metrics import calculate_all_metrics
 
 
 
@@ -265,8 +266,8 @@ class XGBoostModel:
         XGBoostModel
             Loaded model instance
         """
-        with open(filepath, 'rb') as f:
-            model_data = pickle.load(f)
+        # with open(filepath, 'rb') as f:
+        joblib.dump(model_data, filepath)
         
         # Create instance
         instance = cls(
