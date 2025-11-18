@@ -10,7 +10,7 @@ import joblib
 import shap
 import matplotlib.pyplot as plt
 
-MODEL_PATH = 'xgboost_best.pkl'
+MODEL_PATH = 'models/advanced/xgboost_best.pkl'
 
 def load_model():
     """Load model and create explainer"""
