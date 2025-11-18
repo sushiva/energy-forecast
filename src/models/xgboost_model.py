@@ -247,10 +247,11 @@ class XGBoostModel:
 
         # --- CHANGED LINE ---
          # We remove the open(filepath, 'wb') block and use joblib directly.
-        joblib.dump(model_data, filepath)    
+        model_data = joblib.load(filepath)    
         
         print(f"Model saved to: {filepath}")
     
+    @classmethod
     @classmethod
     def load(cls, filepath):
         """
@@ -266,27 +267,20 @@ class XGBoostModel:
         XGBoostModel
             Loaded model instance
         """
-        # with open(filepath, 'rb') as f:
-        joblib.dump(model_data, filepath)
+        model_data = joblib.load(filepath)
         
-        # Create instance
-        instance = cls(
-            n_estimators=model_data['n_estimators'],
-            learning_rate=model_data['learning_rate'],
-            max_depth=model_data['max_depth'],
-            random_state=model_data['random_state'],
-            **model_data['kwargs']
-        )
+        # Create instance with default parameters
+        instance = cls()
         
         # Restore model state
         instance.model = model_data['model']
-        instance.is_trained = model_data['is_trained']
-        instance.train_metrics = model_data['train_metrics']
+        instance.feature_names = model_data.get('feature_names', None)
+        instance.is_trained = True
         
         print(f"Model loaded from: {filepath}")
         
         return instance
-    
+
     def get_params(self):
         """
         Get model parameters
