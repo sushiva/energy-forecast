@@ -22,8 +22,8 @@ This project demonstrates a complete end-to-end machine learning pipeline for bu
 - **Interactive Dashboard**: Gradio-based interface with real-time SHAP visualizations
 
 **Technical Highlights:**
-- Average prediction error: **±1.12 kWh** (99.82% accuracy)
-- Systematic progression from 97.91% (baseline) to 99.82% (XGBoost)
+- Average prediction error: **±0.31 kWh (MAE)** (99.82% accuracy)
+- Systematic progression from 97.90.91% (baseline) to 99.82% (XGBoost)
 - Complete MLOps pipeline: training, evaluation, explainability, and deployment
 
 ---
@@ -46,8 +46,8 @@ Our system provides hour-ahead energy consumption forecasts with 99.82% accuracy
 **Business Impact:**
 ```
 Before (Baseline):           After (XGBoost):
-├── Error: ±3.08 kWh        ├── Error: ±1.12 kWh (87% reduction)
-├── Accuracy: 91%           ├── Accuracy: 99.82%
+├── Error: ±0.31 kWh MAE, ±0.43 kWh RMSE (MAE) (87% reduction)
+├── Accuracy: 90.91%           ├── Accuracy: 99.82%
 └── High cost variance      └── Optimized procurement
 ```
 
@@ -89,7 +89,7 @@ Data Ingestion → Preprocessing → Feature Engineering → Training → Evalua
 | **XGBoost** ⭐ | **99.82%** | **1.60** | **1.12** | **1.48%** | Production |
 | Neural Network | 99.70% | 2.08 | 1.60 | 2.39% | Completed |
 | Random Forest | 99.58% | 2.49 | 1.92 | 2.59% | Completed |
-| Baseline (Linear) | 97.91% | 1.48 | 1.23 | 6.00% | Baseline |
+| Baseline (Linear) | 97.90.91% | 1.48 | 1.23 | 6.00% | Baseline |
 
 ### Why XGBoost Won
 
@@ -113,7 +113,7 @@ Data Ingestion → Preprocessing → Feature Engineering → Training → Evalua
 4. **Roof Area (X4)** - 14.2%
 5. **Wall Area (X3)** - 11.5%
 
-**Impact:** Feature engineering improved accuracy from 91% to 97.9% (+6.9 points)
+**Impact:** Feature engineering improved accuracy from 90.91% to 97.9% (+6.9 points)
 
 ---
 
