@@ -22,7 +22,7 @@ This project demonstrates a complete end-to-end machine learning pipeline for bu
 - **Interactive Dashboard**: Gradio-based interface with real-time SHAP visualizations
 
 **Technical Highlights:**
-- - Average prediction error: **±0.31 kWh MAE, ±0.43 kWh RMSE** (99.82% accuracy)
+- Average prediction error: **±0.31 kWh MAE, ±0.43 kWh RMSE** (99.82% accuracy)
 - Systematic progression from 90.91% (baseline) to 99.82% (XGBoost)
 - Complete MLOps pipeline: training, evaluation, explainability, and deployment
 
@@ -46,9 +46,9 @@ Our system provides hour-ahead energy consumption forecasts with 99.82% accuracy
 **Business Impact:**
 ```
 Before (Baseline):              After (XGBoost):
-├── ├── Error: ±2.10 kWh MAE       ├── Error: ±0.31 kWh MAE (85% reduction)
+├── Error: ±2.10 kWh MAE       ├── Error: ±0.31 kWh MAE (85% reduction)
 ├──        ±3.08 kWh RMSE      ├──        ±0.43 kWh RMSE (86% reduction)
-├── ├── Accuracy: 90.91%           ├── Accuracy: 99.82%
+├── Accuracy: 90.91%           ├── Accuracy: 99.82%
 └── High cost variance         └── Optimized procurement
 ```
 
@@ -105,11 +105,6 @@ Data Ingestion → Preprocessing → Feature Engineering → Training → Evalua
 - **7.16x better RMSE** (0.43 vs 3.08 kWh)
 - **+8.91% higher R²** (99.82% vs 90.91%)
 
-**Performance Improvement:**
-- **6.77x better MAE** (0.31 vs 2.10 kWh)
-- **7.16x better RMSE** (0.43 vs 3.08 kWh)
-- **+8.91% higher R²** (99.82% vs 90.91%)
-
 ---
 
 ## 📊 Feature Engineering
@@ -127,7 +122,6 @@ Data Ingestion → Preprocessing → Feature Engineering → Training → Evalua
 **Key Insight:** Relative compactness (X1) is the dominant predictor, accounting for **85.3%** of the model's decision-making. This represents the building's shape efficiency—more compact buildings consume less energy due to reduced surface area exposure.
 
 **Impact:** Feature engineering improved accuracy from 90.91% to 99.82% (+8.91 points)
-
 
 ---
 
@@ -288,5 +282,5 @@ MIT License - See [LICENSE](LICENSE) file
 
 ---
 
-**Last Updated:** November 19, 2025
+**Last Updated:** November 19, 2025  
 **Status:** Production Ready ✅
