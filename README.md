@@ -1,5 +1,11 @@
 # Energy Consumption Forecasting System
 
+## 🚀 Live Interactive Demo
+
+[![Open in Spaces](https://huggingface.co/datasets/huggingface/badges/raw/main/open-in-hf-spaces-md-dark.svg)](https://huggingface.co/spaces/iamaiami/energy-consumption-forecast)
+
+**Try the live demo** - Adjust building features and see real-time predictions with SHAP explanations!
+
 > A production-ready machine learning system that predicts building energy consumption with 99.82% accuracy, enabling optimized energy management and cost reduction.
 
 [![Python](https://img.shields.io/badge/Python-3.11-blue.svg)](https://www.python.org/)
