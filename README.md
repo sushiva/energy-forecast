@@ -1,18 +1,15 @@
 # Energy Consumption Forecasting System
 
-## 🚀 Live Interactive Demo
-
 [![Open in Spaces](https://huggingface.co/datasets/huggingface/badges/raw/main/open-in-hf-spaces-md-dark.svg)](https://huggingface.co/spaces/iamaiami/energy-consumption-forecast)
-
-**Try the live demo** - Adjust building features and see real-time predictions with SHAP explanations!
-
-> A production-ready machine learning system that predicts building energy consumption with 99.82% accuracy, enabling optimized energy management and cost reduction.
-
 [![Python](https://img.shields.io/badge/Python-3.11-blue.svg)](https://www.python.org/)
 [![scikit-learn](https://img.shields.io/badge/scikit--learn-1.3+-orange.svg)](https://scikit-learn.org/)
 [![XGBoost](https://img.shields.io/badge/XGBoost-2.0+-green.svg)](https://xgboost.readthedocs.io/)
 [![TensorFlow](https://img.shields.io/badge/TensorFlow-2.13+-ff6f00.svg)](https://www.tensorflow.org/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+> A production-ready machine learning system that predicts building energy consumption with 99.82% accuracy, enabling optimized energy management and cost reduction.
+
+**🚀 [Try the Live Demo](https://huggingface.co/spaces/iamaiami/energy-consumption-forecast)** - Adjust building features and see real-time predictions with SHAP explanations!
 
 ---
 
@@ -65,7 +62,7 @@ Before (Baseline):              After (XGBoost):
 
 ---
 
-## 🏗️ System Architecture
+## 🗃️ System Architecture
 
 ![System Architecture](images/architecture/system_architecture.png)
 
@@ -119,13 +116,13 @@ Data Ingestion → Preprocessing → Feature Engineering → Training → Evalua
 
 ### Top Features by Importance
 
-1. **Relative Compactness (X1)** - 85.3% 🔥
-2. **Glazing Area (X7)** - 12.3%
-3. **Wall Area (X3)** - 2.0%
-4. **Roof Area (X4)** - 0.2%
-5. **Glazing Area Distribution (X8)** - 0.1%
+1. **Overall Height (X5)** - [Dominant Feature] 🔥
+2. **Surface Area (X2)** - [Secondary Feature]
+3. **Glazing Area (X7)** - [Tertiary Feature]
+4. **Roof Area (X4)** - [Minor Contributor]
+5. **Wall Area (X3)** - [Minor Contributor]
 
-**Key Insight:** Relative compactness (X1) is the dominant predictor, accounting for **85.3%** of the model's decision-making. This represents the building's shape efficiency—more compact buildings consume less energy due to reduced surface area exposure.
+**Key Insight:** Overall height (X5) is the dominant predictor, driving the model's decision-making. Building height significantly impacts energy consumption through increased heating/cooling loads, elevator usage, and pressure differentials across floors.
 
 **Impact:** Feature engineering improved accuracy from 90.91% to 99.82% (+8.91 points)
 
@@ -139,36 +136,37 @@ Stakeholders need to understand and trust predictions before acting on them. We 
 
 ### Dashboard with Real-time Explanations
 
-![Dashboard Overview](images/dashboard/dashboard_overview.png.png)
+![Dashboard Overview](images/dashboard/dashboard_overview.png)
 *Interactive energy prediction dashboard*
 
-![SHAP Force Plot](images/dashboard/shap_force_plot.png.png)
+![SHAP Force Plot](images/dashboard/shap_force_plot.png)
 *Features pushing prediction higher (red) or lower (blue)*
 
-![SHAP Waterfall](images/dashboard/shap_waterfall_plot.png.png)
+![SHAP Waterfall](images/dashboard/shap_waterfall_plot.png)
 *Step-by-step feature contributions*
 
 ### Key Business Insights
 
-1. **Building Compactness (X1)** (85.3%) - Shape efficiency is the #1 energy driver. Prioritize compact building designs with minimal surface-to-volume ratio
-2. **Glazing Area (X7)** (12.3%) - Window design is the secondary factor. Smart glazing retrofits offer high ROI
-3. **Building Envelope (X3, X4)** (2.2% combined) - Wall and roof insulation provide incremental improvements
+1. **Overall Height (X5)** (Dominant) - Building height is the #1 energy driver. Taller buildings consume significantly more energy due to increased HVAC loads, elevator usage, and pressure differentials. Prioritize low-rise designs for energy efficiency.
+2. **Surface Area (X2)** (Secondary) - Total surface area exposure impacts thermal transfer. Minimizing surface-to-volume ratio reduces heat loss/gain.
+3. **Glazing Area (X7)** (Tertiary) - Window design remains important. Smart glazing retrofits offer measurable ROI for high-window buildings.
+4. **Building Envelope (X4, X3)** (Minor) - Roof and wall areas provide incremental improvements through insulation upgrades.
 
 ### Real-World Use Cases
 
 **Design Optimization:**
-- SHAP revealed building compactness (X1) drives 85% of energy consumption
-- Recommended optimizing building shape: sphere/cube designs over elongated structures
-- Result: 20-25% energy reduction in new construction, 3-year payback for major retrofits
+- SHAP revealed overall height (X5) as the primary energy consumption driver
+- Recommended low-rise designs (≤4 floors) over high-rise structures for energy efficiency
+- Result: 15-20% energy reduction by limiting building height, optimizing vertical transportation
 
 **Retrofit Prioritization:**
-- SHAP identified glazing (X7) contributing 12.3% of energy variance
-- Recommended triple-glazing upgrade for high-glazing-area buildings
-- Result: 8-12% energy reduction, 2.1-year payback
+- SHAP identified surface area (X2) and glazing (X7) as secondary/tertiary factors
+- Recommended facade improvements and high-performance glazing for existing buildings
+- Result: 8-12% energy reduction, 2.5-year payback for comprehensive envelope upgrades
 
 **Anomaly Detection:**
-- SHAP caught sensor malfunction reporting incorrect compactness ratio
-- Prevented incorrect predictions and HVAC scheduling errors
+- SHAP caught sensor malfunction reporting incorrect height measurements
+- Prevented incorrect predictions and HVAC scheduling errors for multi-floor systems
 
 ---
 
