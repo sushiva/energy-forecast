@@ -28,7 +28,7 @@ MODEL, EXPLAINER = load_model()
 
 FEATURE_NAMES = ['X1', 'X2', 'X3', 'X4', 'X5', 'X6', 'X7', 'X8']
 DESCRIPTIONS = {
-    'X1': 'Relative Compactness',
+    'X1': 'Relative Compactness (1.02-1.61: higher=compact/cube, lower=elongated)',
     'X2': 'Surface Area',
     'X3': 'Wall Area', 
     'X4': 'Roof Area',
@@ -144,7 +144,7 @@ with gr.Blocks(title="SHAP Explorer", theme=gr.themes.Soft()) as demo:
         with gr.Column(scale=1):
             gr.Markdown("### 🎚️ Building Features")
             
-            X1 = gr.Slider(0.6, 1.0, 0.79, step=0.01, label=f"X1 ({DESCRIPTIONS['X1']})")
+            X1 = gr.Slider(1.02, 1.61, 1.30, step=0.01, label=f"X1 ({DESCRIPTIONS['X1']}) - Higher = More Compact")
             X2 = gr.Slider(500, 850, 637, step=10, label=f"X2 ({DESCRIPTIONS['X2']})")
             X3 = gr.Slider(200, 450, 318, step=10, label=f"X3 ({DESCRIPTIONS['X3']})")
             X4 = gr.Slider(100, 250, 147, step=10, label=f"X4 ({DESCRIPTIONS['X4']})")
