@@ -9,16 +9,29 @@ import numpy as np
 import joblib
 import shap
 import matplotlib.pyplot as plt
+import os
 
-#For local testing
-# MODEL_PATH = 'models/advanced/xgboost_best.pkl'    
-#For deployment
-MODEL_PATH = 'xgboost_best.pkl'
+
+
+# Auto-detect environment and load model
+def load_model_smart():
+    """Load model from correct path based on environment"""
+    # Check if running on HuggingFace Spaces or if model exists in root
+    if os.path.exists('xgboost_best.pkl'):
+        # Deployment - model in root
+        model_path = 'xgboost_best.pkl'
+        print("Loading from deployment path (root)")
+    else:
+        # Local development - model in models/advanced/
+        model_path = 'models/advanced/xgboost_best.pkl'
+        print("Loading from local path")
+    
+    return joblib.load(model_path)
 
 def load_model():
     """Load model and create explainer"""
     try:
-        model_data = joblib.load(MODEL_PATH)
+        model_data = load_model_smart()
         model = model_data['model'] if isinstance(model_data, dict) else model_data
         explainer = shap.TreeExplainer(model)
         print("✓ Model and SHAP loaded")
@@ -28,6 +41,7 @@ def load_model():
         return None, None
 
 MODEL, EXPLAINER = load_model()
+
 
 FEATURE_NAMES = ['X1', 'X2', 'X3', 'X4', 'X5', 'X6', 'X7', 'X8']
 DESCRIPTIONS = {
